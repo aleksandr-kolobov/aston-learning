@@ -51,31 +51,26 @@ public class CustomArrayList<T> {
  + get(int index)
  + size()
  + isEmpty()
- - remove(int index)
- - remove(Object o)
+ + remove(int index)
+ + remove(Object o)
  + sort(Comparator<? super E> c)
   */
 
-    private void add(T e, Object[] elementData, int s) {
-        if (s == elementData.length) {
-            elementData = grow(s + 1);
-        }
-        elementData[s] = e;
-        size = s + 1;
-    }
-
     public void add(T e) {
-        add(e, dataArray, size);
+        if (size == dataArray.length) {
+            dataArray = grow(size + 1);
+        }
+        dataArray[size] = e;
+        size += 1;
     }
 
     public void add(int index, T element) {
         checkIndex(index);
-        int s = size;
         Object[] elementData = this.dataArray;
-        if (s == elementData.length) {
-            elementData = grow(s + 1);
+        if (size == elementData.length) {
+            elementData = grow(size + 1);
         }
-        System.arraycopy(elementData, index, elementData, index + 1, s - index);
+        System.arraycopy(elementData, index, elementData, index + 1, size - index);
         elementData[index] = element;
         size += 1;
     }
@@ -86,10 +81,9 @@ public class CustomArrayList<T> {
         if (numNew == 0) {
             return false;
         }
-        int s = size;
         Object[] elementData = this.dataArray;
-        if (numNew > (elementData.length - s)) {
-            elementData = grow(s + numNew);
+        if (numNew > (elementData.length - size)) {
+            elementData = grow(size + numNew);
         }
         System.arraycopy(array, 0, elementData, size, numNew);
         size += numNew;
@@ -115,6 +109,28 @@ public class CustomArrayList<T> {
 
     public boolean isEmpty() {
         return (size == 0);
+    }
+
+    public void remove(int index) {
+        checkIndex(index);
+        size -= 1;
+        if (index < size) {
+            System.arraycopy(dataArray, index + 1, dataArray, index, size - index);
+        }
+        dataArray[size] = null;
+    }
+
+    public void remove(Object o) {
+        for (int i = 0; i < size; i++) {
+            if (dataArray[i].equals(o) || (dataArray[i] == null && o == null)) {
+                remove(i);
+                i--;
+            }
+        }
+    }
+
+    public String toString() {
+        return Arrays.toString(dataArray);
     }
 
     @SuppressWarnings("unchecked")
@@ -161,5 +177,4 @@ public class CustomArrayList<T> {
             throw new IndexOutOfBoundsException("Index out of bounds");
         }
     }
-
 }
