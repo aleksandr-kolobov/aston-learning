@@ -9,8 +9,14 @@ public class Main {
         try {
             Connection connection = DriverManager.getConnection(url, user, pass);
             Statement statement = connection.createStatement();
+
             //statement.execute(";");
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM courses;");
+            //ResultSet resultSet = statement.executeQuery("SELECT * FROM courses;");
+
+            ResultSet resultSet = statement.executeQuery("SELECT s.id, s.name, s.age FROM students s " +
+                    "JOIN student_cours sc ON s.id = sc.student_id " +
+                    "JOIN courses c ON sc.cours_id = c.id WHERE c.id = 1;");
+
             while (resultSet.next()) {
                 System.out.println(resultSet.getString(1) + " "
                         + resultSet.getString(2) + " "

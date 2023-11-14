@@ -1,12 +1,12 @@
 package service;
 
-import repository.CoursRepository;
+import repository.CourseRepository;
 
 public class CourseService {
 
-    private final CoursRepository repository;
+    private final CourseRepository repository;
 
-    public CourseService(CoursRepository repository) {
+    public CourseService(CourseRepository repository) {
         this.repository = repository;
     }
 }
