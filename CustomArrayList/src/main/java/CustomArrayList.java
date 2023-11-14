@@ -43,19 +43,6 @@ public class CustomArrayList<T> {
         }
     }
 
-  /*
- + add(E element)
- + add(int index, E element)
- + addAll(Collection<? extends E> c)
- + clear()
- + get(int index)
- + size()
- + isEmpty()
- + remove(int index)
- + remove(Object o)
- + sort(Comparator<? super E> c)
-  */
-
     public void add(T e) {
         if (size == dataArray.length) {
             dataArray = grow(size + 1);
