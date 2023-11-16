@@ -1,12 +1,18 @@
 package service;
 
-import repository.CourseRepository;
+import model.Course;
+import java.util.List;
 
-public class CourseService {
+public interface CourseService {
 
-    private final CourseRepository repository;
+    Course findById(Long id);
 
-    public CourseService(CourseRepository repository) {
-        this.repository = repository;
-    }
+    Course save(Course course);
+
+    Course update(Course course);
+
+    void deleteById(Long id);
+
+    List<Course> findAll();
+
 }

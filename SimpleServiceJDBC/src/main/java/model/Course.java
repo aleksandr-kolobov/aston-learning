@@ -9,6 +9,6 @@ public class Course {
 
     private String name;
 
-    private Byte duration;
+    private Integer duration;
 
 }

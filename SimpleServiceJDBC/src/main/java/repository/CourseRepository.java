@@ -5,19 +5,22 @@ import model.Student;
 import model.Teacher;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CourseRepository {
 
-    Course save(Course course);
+    Optional<Course> findById(Long id);
 
-    boolean delete(Long id);
+    void save(Course course);
 
-    Course get(Long id);
+    void update(Course course);
 
-    List<Course> getList();
+    void deleteById(Long id);
 
-    List<Student> getAllStudents(Long courseId);
+    List<Course> findAll();
 
-    List<Teacher> getAllTeachers(Long courseId);
+    List<Student> findAllStudentsOfCourse(Long courseId);
+
+    List<Teacher> findAllTeachersOfCourse(Long courseId);
 
 }

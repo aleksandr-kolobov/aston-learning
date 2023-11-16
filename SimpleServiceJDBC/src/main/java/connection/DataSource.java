@@ -20,6 +20,7 @@ public class DataSource {
     public static void closeConnection() throws SQLException {
         if (connection != null) {
             connection.close();
+            connection = null;
         }
     }
 

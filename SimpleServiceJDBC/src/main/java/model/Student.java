@@ -9,6 +9,6 @@ public class Student {
 
     private String name;
 
-    private Byte age;
+    private Integer age;
 
 }
