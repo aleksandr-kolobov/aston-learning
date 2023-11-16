@@ -1,32 +1,38 @@
 package service;
 
 import model.Course;
+import repository.CourseRepository;
+import repository.CourseRepositoryImpl;
 
 import java.util.List;
 
 public class CourseServiceImpl implements CourseService {
+
+    private final CourseRepository courseRepository = new CourseRepositoryImpl();
+
     @Override
     public Course findById(Long id) {
-        return null;
+        return courseRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
     @Override
-    public Course save(Course course) {
-        return null;
+    public void save(Course course) {
+        courseRepository.save(course);
     }
 
     @Override
-    public Course update(Course course) {
-        return null;
+    public void update(Course course) {
+        courseRepository.update(course);
     }
 
     @Override
     public void deleteById(Long id) {
+        courseRepository.deleteById(id);
 
     }
 
     @Override
     public List<Course> findAll() {
-        return null;
+        return courseRepository.findAll();
     }
 }

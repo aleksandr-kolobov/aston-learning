@@ -7,9 +7,9 @@ public interface CourseService {
 
     Course findById(Long id);
 
-    Course save(Course course);
+    void save(Course course);
 
-    Course update(Course course);
+    void update(Course course);
 
     void deleteById(Long id);
 
