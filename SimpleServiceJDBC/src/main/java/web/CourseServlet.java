@@ -1,8 +1,6 @@
 package web;
 
 import model.Course;
-import repository.CourseRepository;
-import repository.CourseRepositoryImpl;
 import service.CourseService;
 import service.CourseServiceImpl;
 
@@ -15,38 +13,57 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-@WebServlet("/courses")
+@WebServlet("/courses/*")
 public class CourseServlet extends HttpServlet {
+
+    private CourseService courseService;
+
+    public CourseServlet () {
+        courseService = new CourseServiceImpl();
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        CourseService courseService = new CourseServiceImpl();
-
-        List<Course> list = courseService.findAll();
-        /*List<Course> list = new ArrayList<>();
-        Course course = new Course();
-        course.setId(6L);
-        course.setName("Mechanics");
-        course.setDuration(19);
-        courseRepository.update(course);
-        list.add(course);*/
-
+        String pathInfo = req.getPathInfo();
         resp.setContentType("text/html");
         PrintWriter printWriter = resp.getWriter();
 
-        list.forEach(c -> printWriter.write(c.getId() + " " + c.getName() + " "
-                + c.getDuration() + " months<br>"));
-
+        if (pathInfo == null) {
+            List<Course> list = courseService.findAll();
+            list.forEach(c -> printWriter.write(c.getId() + " " + c.getName() + " "
+                    + c.getDuration() + " months<br>"));
+        } else {
+            Long id = Long.parseLong(pathInfo.substring(1));
+            Course c = courseService.findById(id);
+            printWriter.write(c.getName() + " " + c.getDuration() + " months<br>");
+        }
         printWriter.close();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        Course course = new Course();
+    //  выкалупываем course из req...
+        courseService.save(course);
+    }
 
-        super.doPost(req, resp);
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        Course course = new Course();
+        //  выкалупываем course из req...
+        courseService.update(course);
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        String pathInfo = req.getPathInfo();
+        Long id = Long.parseLong(pathInfo.substring(1));
+        courseService.deleteById(id);
     }
 
 }

@@ -20,6 +20,10 @@ public class CourseRepositoryImpl implements CourseRepository{
 
         Optional<Course> optionalCourse = Optional.empty();
 
+        if(id == null) {
+            return optionalCourse;
+        }
+
         try {
             Connection connection = DataSource.getConnection();
             Statement statement = connection.createStatement();
@@ -45,12 +49,17 @@ public class CourseRepositoryImpl implements CourseRepository{
 
     @Override
     public void save(Course course) {
+        if (course == null) {
+            return;
+        }
         try {
             Connection connection = DataSource.getConnection();
             Statement statement = connection.createStatement();
+            //course.setId(System.currentTimeMillis());
             statement.execute("INSERT INTO courses (name, duration)" +
                     " values('" + course.getName() + "', " + course.getDuration() + ");");
             statement.close();
+            //return course;
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -58,13 +67,20 @@ public class CourseRepositoryImpl implements CourseRepository{
 
     @Override
     public void update(Course course) {
+        Long id = course.getId();
+        if(id == null) {
+            return;
+        }
         try {
             Connection connection = DataSource.getConnection();
             Statement statement = connection.createStatement();
-            statement.execute("UPDATE courses SET name = '" + course.getName() +
-                    "' WHERE id = " + course.getId() + ";");
-            statement.execute("UPDATE courses SET duration = " + course.getDuration() +
-                    " WHERE id = " + course.getId() + ";");
+
+            if (findById(id).isPresent()) {
+                statement.execute("UPDATE courses SET name = '" + course.getName() +
+                        "' WHERE id = " + course.getId() + ";");
+                statement.execute("UPDATE courses SET duration = " + course.getDuration() +
+                        " WHERE id = " + course.getId() + ";");
+            }
             statement.close();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -73,11 +89,17 @@ public class CourseRepositoryImpl implements CourseRepository{
 
     @Override
     public void deleteById(Long id) {
+        if(id == null) {
+            return;
+        }
         try {
             Connection connection = DataSource.getConnection();
             Statement statement = connection.createStatement();
-            statement.execute("DELETE FROM courses " +
-                    " WHERE id = " + id + ";");
+
+            if (findById(id).isPresent()) {
+                statement.execute("DELETE FROM courses " +
+                        " WHERE id = " + id + ";");
+            }
             statement.close();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

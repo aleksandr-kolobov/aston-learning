@@ -12,7 +12,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course findById(Long id) {
-        return courseRepository.findById(id).orElseThrow(RuntimeException::new);
+        return courseRepository.findById(id).orElse(null);
     }
 
     @Override
