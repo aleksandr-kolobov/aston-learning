@@ -12,7 +12,6 @@ public class IndexServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        getServletContext().getRequestDispatcher("/courses").forward(req, resp);
         resp.sendRedirect(req.getContextPath() + "/courses");
     }
 }

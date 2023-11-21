@@ -11,8 +11,8 @@ public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository = new CourseRepositoryImpl();
 
     @Override
-    public Course findById(Long id) {
-        return courseRepository.findById(id).orElse(null);
+    public Course findById(Integer id) {
+        return courseRepository.findById(id);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Integer id) {
         courseRepository.deleteById(id);
 
     }
