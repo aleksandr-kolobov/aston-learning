@@ -1,6 +1,7 @@
 package service;
 
 import model.Course;
+import model.Student;
 import repository.CourseRepository;
 import repository.CourseRepositoryImpl;
 
@@ -28,11 +29,15 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public void deleteById(Integer id) {
         courseRepository.deleteById(id);
-
     }
 
     @Override
     public List<Course> findAll() {
         return courseRepository.findAll();
+    }
+
+    @Override
+    public List<Student> findAllStudentsOfCourse(Integer courseId) {
+        return courseRepository.findAllStudentsOfCourse(courseId);
     }
 }

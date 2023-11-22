@@ -1,6 +1,8 @@
 package service;
 
 import model.Course;
+import model.Student;
+
 import java.util.List;
 
 public interface CourseService {
@@ -14,5 +16,7 @@ public interface CourseService {
     void deleteById(Integer id);
 
     List<Course> findAll();
+
+    public List<Student> findAllStudentsOfCourse(Integer courseId);
 
 }

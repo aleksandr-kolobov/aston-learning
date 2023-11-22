@@ -13,6 +13,7 @@ public class Teacher {
 
     private String name;
 
-    @Column(name = "course_id")
-    private Integer courseId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id")
+    private Course course;
 }
