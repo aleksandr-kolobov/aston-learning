@@ -55,11 +55,9 @@ public class CourseRepositoryImpl implements CourseRepository{
         try {
             Connection connection = DataSource.getConnection();
             Statement statement = connection.createStatement();
-            //course.setId(System.currentTimeMillis());
             statement.execute("INSERT INTO courses (name, duration)" +
                     " values('" + course.getName() + "', " + course.getDuration() + ");");
             statement.close();
-            //return course;
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -67,8 +65,11 @@ public class CourseRepositoryImpl implements CourseRepository{
 
     @Override
     public void update(Course course) {
+        if (course == null) {
+            return;
+        }
         Long id = course.getId();
-        if(id == null) {
+        if (id == null) {
             return;
         }
         try {
@@ -137,6 +138,9 @@ public class CourseRepositoryImpl implements CourseRepository{
     public List<Student> findAllStudentsOfCourse(Long courseId) {
 
         List<Student> list = new ArrayList<>();
+        if(courseId == null) {
+            return list;
+        }
 
         try {
             Connection connection = DataSource.getConnection();
@@ -166,6 +170,9 @@ public class CourseRepositoryImpl implements CourseRepository{
     public List<Teacher> findAllTeachersOfCourse(Long courseId) {
 
         List<Teacher> list = new ArrayList<>();
+        if(courseId == null) {
+            return list;
+        }
 
         try {
             Connection connection = DataSource.getConnection();

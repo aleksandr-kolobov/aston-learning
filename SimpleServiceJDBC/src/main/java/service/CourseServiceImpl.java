@@ -1,6 +1,7 @@
 package service;
 
 import model.Course;
+import model.Student;
 import repository.CourseRepository;
 import repository.CourseRepositoryImpl;
 
@@ -34,5 +35,10 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> findAll() {
         return courseRepository.findAll();
+    }
+
+    @Override
+    public List<Student> findAllStudentsOfCourse(Long courseId) {
+        return courseRepository.findAllStudentsOfCourse(courseId);
     }
 }

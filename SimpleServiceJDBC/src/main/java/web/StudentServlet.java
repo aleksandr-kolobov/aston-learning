@@ -1,8 +1,10 @@
 package web;
 
-import model.Course;
+import model.Student;
 import service.CourseService;
 import service.CourseServiceImpl;
+import service.StudentService;
+import service.StudentServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,14 +13,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/courses/*")
-public class CourseServlet extends HttpServlet {
+@WebServlet("/students/*")
+public class StudentServlet extends HttpServlet {
 
+    private final StudentService studentService;
     private final CourseService courseService;
 
-    public CourseServlet () {
+    public StudentServlet () {
+        studentService = new StudentServiceImpl();
         courseService = new CourseServiceImpl();
     }
 
@@ -30,51 +35,53 @@ public class CourseServlet extends HttpServlet {
         resp.setContentType("text/html");
         PrintWriter printWriter = resp.getWriter();
 
-        if (pathInfo == null) {
-            List<Course> list = courseService.findAll();
-            list.forEach(c -> printWriter.write(c.getId() + " " + c.getName() + " "
-                    + c.getDuration() + " months<br>"));
-        } else {
+        List<Student> list = new ArrayList<>();
+        if (pathInfo != null) {
             Long id = Long.parseLong(pathInfo.substring(1));
-            Course c = courseService.findById(id);
-            printWriter.write(c.getName() + " " + c.getDuration() + " months<br>");
+            list.add(studentService.findById(id));
+        } else if (req.getParameter("courseId") != null) {
+            Long courseId = Long.parseLong(req.getParameter("courseId"));
+            list = courseService.findAllStudentsOfCourse(courseId);
+        } else {
+            list = studentService.findAll();
         }
+        list.forEach(s -> printWriter.write(s.getId() + " " + s.getName() + " "
+                + s.getAge() + " years<br>"));
+
         printWriter.close();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        Course course = new Course();
+        Student student = new Student();
         String name = req.getParameter("name");
-        int duration = Integer.parseInt(req.getParameter("duration"));
-        course.setName(name);
-        course.setDuration(duration);
-        courseService.save(course);
-        resp.sendRedirect("/courses");
+        int age = Integer.parseInt(req.getParameter("age"));
+        student.setName(name);
+        student.setAge(age);
+        studentService.save(student);
+        resp.sendRedirect("/students");
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        Course course = new Course();
+        Student student = new Student();
         Long id = Long.parseLong(req.getParameter("id"));
         String name = req.getParameter("name");
-        Integer duration = Integer.parseInt(req.getParameter("duration"));
-        course.setId(id);
-        course.setName(name);
-        course.setDuration(duration);
-        courseService.update(course);
-        resp.sendRedirect("/courses");
+        Integer age = Integer.parseInt(req.getParameter("age"));
+        student.setId(id);
+        student.setName(name);
+        student.setAge(age);
+        studentService.update(student);
+        resp.sendRedirect("/students");
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         Long id = Long.parseLong(req.getParameter("id"));
-        courseService.deleteById(id);
-        resp.sendRedirect("/courses");
+        studentService.deleteById(id);
+        resp.sendRedirect("/students");
     }
-
 }
-
