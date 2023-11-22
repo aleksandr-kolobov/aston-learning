@@ -16,7 +16,7 @@ import java.util.List;
 @WebServlet("/courses/*")
 public class CourseServlet extends HttpServlet {
 
-    private CourseService courseService;
+    private final CourseService courseService;
 
     public CourseServlet () {
         courseService = new CourseServiceImpl();
@@ -36,9 +36,12 @@ public class CourseServlet extends HttpServlet {
                     + c.getDuration() + " months<br>"));
         } else {
             Integer id = Integer.parseInt(pathInfo.substring(1));
-            Course c = courseService.findById(id);
-            printWriter.write(c.getName() + " " + c.getDuration() + " months<br>");
+            Course course = courseService.findById(id);
+            printWriter.write(course.getId() + " " + course.getName() + " "
+                    + course.getDuration() + " months<br> has teachers:<br>");
+            course.getTeachers().forEach(t -> printWriter.write(t.getName() + "<br>"));
         }
+
         printWriter.close();
     }
 

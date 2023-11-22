@@ -13,14 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/students/*")
 public class StudentServlet extends HttpServlet {
 
-    private StudentService studentService;
-    private CourseService courseService;
+    private final StudentService studentService;
+    private final CourseService courseService;
 
     public StudentServlet () {
         studentService = new StudentServiceImpl();
@@ -35,18 +34,17 @@ public class StudentServlet extends HttpServlet {
         resp.setContentType("text/html");
         PrintWriter printWriter = resp.getWriter();
 
-        List<Student> list = new ArrayList<>();
-        if (pathInfo != null) {
-            Integer id = Integer.parseInt(pathInfo.substring(1));
-            list.add(studentService.findById(id));
-        } else if (req.getParameter("courseId") != null) {
-            Integer courseId = Integer.parseInt(req.getParameter("courseId"));
-            list = courseService.findAllStudentsOfCourse(courseId);
+        if (pathInfo == null) {
+            List<Student> list = studentService.findAll();
+            list.forEach(s -> printWriter.write(s.getId() + " " + s.getName() + " "
+                    + s.getAge() + " years<br>"));
         } else {
-            list = studentService.findAll();
+            Integer id = Integer.parseInt(pathInfo.substring(1));
+            Student student = studentService.findById(id);
+            printWriter.write(student.getId() + " "  + student.getName() + " "
+                    + student.getAge() + " years<br> has courses:<br>");
+            student.getCourses().forEach(c -> printWriter.write(c.getName() + "<br>"));
         }
-        list.forEach(s -> printWriter.write(s.getId() + " " + s.getName() + " "
-                + s.getAge() + " years<br>"));
 
         printWriter.close();
     }

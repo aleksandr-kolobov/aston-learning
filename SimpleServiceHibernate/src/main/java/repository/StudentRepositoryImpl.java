@@ -1,5 +1,6 @@
 package repository;
 
+import model.Course;
 import model.Student;
 
 import connection.HibernateUtil;
@@ -16,9 +17,7 @@ public class StudentRepositoryImpl implements StudentRepository {
             return null;
         }
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Student student = session.get(Student.class, id);
-        session.close();
-        return student;
+        return session.get(Student.class, id);
     }
 
     @Override
@@ -30,7 +29,6 @@ public class StudentRepositoryImpl implements StudentRepository {
         Transaction tx1 = session.beginTransaction();
         session.save(student);
         tx1.commit();
-        session.close();
     }
 
     @Override
@@ -44,12 +42,13 @@ public class StudentRepositoryImpl implements StudentRepository {
         }
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        Student oldStudent = session.get(Student.class, id);
-        if (oldStudent != null) {
-            session.update(student);
+        Student updatingStudent = session.get(Student.class, id);
+        if (updatingStudent != null) {
+            updatingStudent.setAge(student.getAge());
+            updatingStudent.setName(student.getName());
+            session.save(updatingStudent);
         }
         tx1.commit();
-        session.close();
     }
 
     @Override
@@ -64,14 +63,18 @@ public class StudentRepositoryImpl implements StudentRepository {
             session.delete(student);
         }
         tx1.commit();
-        session.close();
     }
 
     @Override
     public List<Student> findAll() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<Student> students = (List<Student>) session.createQuery("From Student").list();
-        session.close();
         return students;
     }
+
+    public List<Course> findAllCoursesOfStudent(Integer studentId) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        return session.get(Student.class, studentId).getCourses();
+    }
+
 }

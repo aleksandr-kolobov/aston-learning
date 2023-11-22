@@ -3,7 +3,6 @@ package model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -18,6 +17,7 @@ public class Course {
 
     private Integer duration;
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Teacher> teachers = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "teachers", inverseJoinColumns = {@JoinColumn(name = "course_id")})
+    private List<Teacher> teachers;
 }

@@ -2,6 +2,7 @@ package service;
 
 import model.Course;
 import model.Student;
+import model.Teacher;
 
 import java.util.List;
 
@@ -17,6 +18,6 @@ public interface CourseService {
 
     List<Course> findAll();
 
-    public List<Student> findAllStudentsOfCourse(Integer courseId);
+    List<Teacher> findAllTeachersOfCourse(Integer courseId);
 
 }

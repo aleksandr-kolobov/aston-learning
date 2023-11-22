@@ -2,6 +2,7 @@ package service;
 
 import model.Course;
 import model.Student;
+import model.Teacher;
 import repository.CourseRepository;
 import repository.CourseRepositoryImpl;
 
@@ -37,7 +38,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Student> findAllStudentsOfCourse(Integer courseId) {
-        return courseRepository.findAllStudentsOfCourse(courseId);
+    public List<Teacher> findAllTeachersOfCourse(Integer courseId) {
+        return courseRepository.findAllTeachersOfCourse(courseId);
     }
+
 }

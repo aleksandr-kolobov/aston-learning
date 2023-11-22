@@ -1,7 +1,6 @@
 package repository;
 
 import model.Course;
-import model.Student;
 import model.Teacher;
 
 import java.util.List;
@@ -17,8 +16,6 @@ public interface CourseRepository {
     void deleteById(Integer id);
 
     List<Course> findAll();
-
-    List<Student> findAllStudentsOfCourse(Integer courseId);
 
     List<Teacher> findAllTeachersOfCourse(Integer courseId);
 
