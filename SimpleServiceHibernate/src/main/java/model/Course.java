@@ -17,7 +17,6 @@ public class Course {
 
     private Integer duration;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "teachers", inverseJoinColumns = {@JoinColumn(name = "course_id")})
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "course", fetch = FetchType.LAZY)
     private List<Teacher> teachers;
 }

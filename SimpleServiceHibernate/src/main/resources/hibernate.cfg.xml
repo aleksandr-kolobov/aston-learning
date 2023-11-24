@@ -13,9 +13,5 @@
         <property name="show_sql">true</property>
         <property name="current_session_context_class">thread</property>
         <property name="hbm2ddl.auto">validate</property>
-
-        <!--mapping class="Course"></mapping-->
-        <!--mapping class="Student"></mapping-->
-        <!--mapping class="Teacher"></mapping-->
     </session-factory>
 </hibernate-configuration>

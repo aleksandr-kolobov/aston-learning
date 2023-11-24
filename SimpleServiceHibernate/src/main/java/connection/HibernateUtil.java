@@ -11,18 +11,17 @@ public class HibernateUtil {
 
     private static SessionFactory sessionFactory = null;
 
-    public static synchronized SessionFactory getSessionFactory() {
+    public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             try {
-                Configuration configuration = new Configuration().configure();
-
-                configuration.addAnnotatedClass(Course.class);
-                configuration.addAnnotatedClass(Student.class);
-                configuration.addAnnotatedClass(Teacher.class);
-
-                StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
+                Configuration configuration = new Configuration()
+                        .configure("hibernate.cfg.xml")
+                        .addAnnotatedClass(Course.class)
+                        .addAnnotatedClass(Student.class)
+                        .addAnnotatedClass(Teacher.class);
+                StandardServiceRegistryBuilder serviceRegistryBuilder = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties());
-                sessionFactory = configuration.buildSessionFactory(builder.build());
+                sessionFactory = configuration.buildSessionFactory(serviceRegistryBuilder.build());
          } catch (Throwable ex) {
                 System.out.println("failed initial SessionFactory");
                 throw  new ExceptionInInitializerError(ex);

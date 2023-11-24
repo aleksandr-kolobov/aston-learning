@@ -24,9 +24,10 @@ public class CourseRepositoryImpl implements CourseRepository{
         if (course == null) {
             return;
         }
+        course.setId(null);
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        session.save(course);
+        session.merge(course);
         tx1.commit();
     }
 
@@ -41,11 +42,8 @@ public class CourseRepositoryImpl implements CourseRepository{
         }
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        Course updatingCourse = session.get(Course.class, id);
-        if (updatingCourse != null) {
-            updatingCourse.setName(course.getName());
-            updatingCourse.setDuration(course.getDuration());
-            session.save(updatingCourse);
+        if (session.get(Course.class, id) != null) {
+            session.merge(course);
         }
         tx1.commit();
     }
@@ -59,7 +57,7 @@ public class CourseRepositoryImpl implements CourseRepository{
         Transaction tx1 = session.beginTransaction();
         Course course = session.get(Course.class, id);
         if (course != null) {
-            session.delete(course);
+            session.remove(course);
         }
         tx1.commit();
     }
@@ -67,7 +65,7 @@ public class CourseRepositoryImpl implements CourseRepository{
     @Override
     public List<Course> findAll() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        return (List<Course>) session.createQuery("From Course").list();
+        return session.createQuery("SELECT a FROM Course a", Course.class).getResultList();
     }
 
     @Override

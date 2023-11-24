@@ -7,6 +7,7 @@ import connection.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.util.Collections;
 import java.util.List;
 
 public class StudentRepositoryImpl implements StudentRepository {
@@ -25,9 +26,10 @@ public class StudentRepositoryImpl implements StudentRepository {
         if (student == null) {
             return;
         }
+        student.setId(null);
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        session.save(student);
+        session.merge(student);
         tx1.commit();
     }
 
@@ -42,11 +44,8 @@ public class StudentRepositoryImpl implements StudentRepository {
         }
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        Student updatingStudent = session.get(Student.class, id);
-        if (updatingStudent != null) {
-            updatingStudent.setAge(student.getAge());
-            updatingStudent.setName(student.getName());
-            session.save(updatingStudent);
+        if (session.get(Student.class, id) != null) {
+            session.merge(student);
         }
         tx1.commit();
     }
@@ -60,7 +59,7 @@ public class StudentRepositoryImpl implements StudentRepository {
         Transaction tx1 = session.beginTransaction();
         Student student = session.get(Student.class, id);
         if (student != null) {
-            session.delete(student);
+            session.remove(student);
         }
         tx1.commit();
     }
@@ -68,7 +67,9 @@ public class StudentRepositoryImpl implements StudentRepository {
     @Override
     public List<Student> findAll() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        List<Student> students = (List<Student>) session.createQuery("From Student").list();
+        List<Student> students = session.createQuery("SELECT a FROM Student a",
+                Student.class).getResultList();
+        Collections.sort(students);
         return students;
     }
 

@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "students")
-public class Student {
+public class Student implements Comparable<Student> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -22,4 +22,9 @@ public class Student {
             joinColumns = {@JoinColumn(name = "student_id")},
             inverseJoinColumns = {@JoinColumn(name = "course_id")})
     private List<Course> courses;
+
+    @Override
+    public int compareTo(Student s) {
+        return id.compareTo(s.getId());
+    }
 }
