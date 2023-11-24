@@ -49,10 +49,8 @@ public class CourseServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         Course course = new Course();
-        String name = req.getParameter("name");
-        int duration = Integer.parseInt(req.getParameter("duration"));
-        course.setName(name);
-        course.setDuration(duration);
+        course.setName(req.getParameter("name"));
+        course.setDuration(Integer.parseInt(req.getParameter("duration")));
         courseService.save(course);
         resp.sendRedirect("/courses");
     }
@@ -61,12 +59,9 @@ public class CourseServlet extends HttpServlet {
     protected void doPut(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         Course course = new Course();
-        int id = Integer.parseInt(req.getParameter("id"));
-        String name = req.getParameter("name");
-        int duration = Integer.parseInt(req.getParameter("duration"));
-        course.setId(id);
-        course.setName(name);
-        course.setDuration(duration);
+        course.setId(Integer.parseInt(req.getParameter("id")));
+        course.setName(req.getParameter("name"));
+        course.setDuration(Integer.parseInt(req.getParameter("duration")));
         courseService.update(course);
         resp.sendRedirect("/courses");
     }
@@ -74,8 +69,7 @@ public class CourseServlet extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        Integer id = Integer.parseInt(req.getParameter("id"));
-        courseService.deleteById(id);
+        courseService.deleteById(Integer.parseInt(req.getParameter("id")));
         resp.sendRedirect("/courses");
     }
 

@@ -19,11 +19,9 @@ import java.util.List;
 public class StudentServlet extends HttpServlet {
 
     private final StudentService studentService;
-    private final CourseService courseService;
 
     public StudentServlet () {
         studentService = new StudentServiceImpl();
-        courseService = new CourseServiceImpl();
     }
 
     @Override
@@ -53,10 +51,8 @@ public class StudentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         Student student = new Student();
-        String name = req.getParameter("name");
-        int age = Integer.parseInt(req.getParameter("age"));
-        student.setName(name);
-        student.setAge(age);
+        student.setName(req.getParameter("name"));
+        student.setAge(Integer.parseInt(req.getParameter("age")));
         studentService.save(student);
         resp.sendRedirect("/students");
     }
@@ -65,12 +61,9 @@ public class StudentServlet extends HttpServlet {
     protected void doPut(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         Student student = new Student();
-        int id = Integer.parseInt(req.getParameter("id"));
-        String name = req.getParameter("name");
-        int age = Integer.parseInt(req.getParameter("age"));
-        student.setId(id);
-        student.setName(name);
-        student.setAge(age);
+        student.setId(Integer.parseInt(req.getParameter("id")));
+        student.setName(req.getParameter("name"));
+        student.setAge(Integer.parseInt(req.getParameter("age")));
         studentService.update(student);
         resp.sendRedirect("/students");
     }
@@ -78,8 +71,7 @@ public class StudentServlet extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        Integer id = Integer.parseInt(req.getParameter("id"));
-        studentService.deleteById(id);
+        studentService.deleteById(Integer.parseInt(req.getParameter("id")));
         resp.sendRedirect("/students");
     }
 
