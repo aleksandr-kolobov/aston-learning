@@ -53,5 +53,7 @@ public class Main {
 
         listOfStrings.remove("34sadf");
         System.out.println(listOfStrings + " " + listOfStrings.size());
+        listOfStrings.remove("jfasdf235");
+        System.out.println(listOfStrings + " " + listOfStrings.size());
     }
 }
