@@ -14,41 +14,41 @@ import java.util.Optional;
 @RequestMapping("/teachers")
 public class TeacherController {
 
-    private final TeacherService teacherService;
+    private final TeacherService service;
 
     @Autowired
-    public TeacherController(TeacherService teacherService) {
-        this.teacherService = teacherService;
+    public TeacherController(TeacherService service) {
+        this.service = service;
     }
 
     @GetMapping()
     public String showAll(Model model) {
-        model.addAttribute("teachers", teacherService.findAll());
+        model.addAttribute("teachers", service.findAll());
         return "teachers";
     }
 
     @GetMapping("{id}")
-    public String showOneTeacher(Model model, @PathVariable("id") int id) {
-        Optional<Teacher> optionalTeacher = teacherService.findById(id);
+    public String showOne(Model model, @PathVariable("id") int id) {
+        Optional<Teacher> optionalTeacher = service.findById(id);
         model.addAttribute("teacher", optionalTeacher.isPresent() ?
                 optionalTeacher.get() : new Teacher());
         return "teacher";
     }
     @PostMapping()
-    public String addTeacher(@ModelAttribute("teacher") @Valid Teacher teacher) {
-        teacherService.save(teacher);
+    public String add(@ModelAttribute("teacher") @Valid Teacher teacher) {
+        service.save(teacher);
         return "redirect:/teachers";
     }
 
     @PutMapping()
-    public String updateTeacher(@ModelAttribute("teacher") @Valid Teacher teacher) {
-        teacherService.update(teacher);
+    public String update(@ModelAttribute("teacher") @Valid Teacher teacher) {
+        service.update(teacher);
         return "redirect:/teachers";
     }
 
     @DeleteMapping()
     public String delete(@ModelAttribute("id") int id) {
-        teacherService.delete(id);
+        service.delete(id);
         return "redirect:/teachers";
     }
 
