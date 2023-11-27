@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Controller
@@ -30,8 +31,16 @@ public class CourseController {
     @GetMapping("{id}")
     public String showOneCourse(Model model, @PathVariable("id") int id) {
         Optional<Course> optionalCourse = courseService.findById(id);
-        model.addAttribute("course", optionalCourse.isPresent() ?
-                optionalCourse.get() : new Course());
+        if (optionalCourse.isPresent()) {
+            Course course = optionalCourse.get();
+            model.addAttribute("course", course);
+            model.addAttribute("teachers", course.getTeachers());
+            System.out.println(course.getTeachers().size());
+        }
+        else {
+            model.addAttribute("course",  new Course());
+            model.addAttribute("teachers", new ArrayList<>());
+        }
         return "course";
     }
     @PostMapping()

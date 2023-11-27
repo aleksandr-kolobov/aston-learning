@@ -21,6 +21,6 @@ public class Course {
     @NotEmpty(message = "Need any")
     private Integer duration;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "course", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "course", fetch = FetchType.EAGER)
     private List<Teacher> teachers;
 }

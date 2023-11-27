@@ -7,11 +7,11 @@
 </head>
 <body>
 <h2>One course</h2>
-<table border="1">
+<table border="3">
     <thead>
     <tr>
         <th>ID</th>
-        <th>Name</th>
+        <th>Course</th>
         <th>Duration</th>
     </tr>
     </thead>
@@ -20,6 +20,21 @@
         <td th:text="${course.id}"></td>
         <td th:text="${course.name}"></td>
         <td th:text="${course.duration}"></td>
+    </tr>
+    </tbody>
+</table>
+<h2>Has teachers</h2>
+<table border="3">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="teacher : ${teachers}">
+        <td th:text="${teacher.id}"></td>
+        <td th:text="${teacher.name}"></td>
     </tr>
     </tbody>
 </table>
