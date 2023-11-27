@@ -1,8 +1,10 @@
-package model;
+package main.model;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
@@ -13,8 +15,10 @@ public class Student implements Comparable<Student> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Size(min = 5)
     private String name;
 
+    @NotEmpty(message = "Need any")
     private Integer age;
 
     @ManyToMany(fetch = FetchType.LAZY)
