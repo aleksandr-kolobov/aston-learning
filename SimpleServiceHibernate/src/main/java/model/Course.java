@@ -1,22 +1,21 @@
 package model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "courses")
-public class Course {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    private String name;
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public class Course extends AbstractEntity {
 
     private Integer duration;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "course", fetch = FetchType.LAZY)
     private List<Teacher> teachers;
+
 }

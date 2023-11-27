@@ -9,9 +9,9 @@ import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
 
-    private static synchronized SessionFactory sessionFactory = null;
+    private static SessionFactory sessionFactory = null;
 
-    public static SessionFactory getSessionFactory() {
+    public static synchronized SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             try {
                 Configuration configuration = new Configuration()
@@ -30,7 +30,7 @@ public class HibernateUtil {
         return sessionFactory;
     }
 
-    public static void closeSessionFactory() {
+    public static synchronized void closeSessionFactory() {
         if (sessionFactory != null) {
             sessionFactory.close();
             sessionFactory = null;

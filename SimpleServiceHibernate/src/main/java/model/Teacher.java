@@ -1,12 +1,16 @@
 package model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "teachers")
-public class Teacher {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public class Teacher extends AbstractEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -15,4 +19,5 @@ public class Teacher {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Course course;
+
 }

@@ -1,14 +1,18 @@
 package model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "students")
-public class Student implements Comparable<Student> {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public class Student extends AbstractEntity implements Comparable<Student> {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -27,4 +31,5 @@ public class Student implements Comparable<Student> {
     public int compareTo(Student s) {
         return id.compareTo(s.getId());
     }
+
 }
