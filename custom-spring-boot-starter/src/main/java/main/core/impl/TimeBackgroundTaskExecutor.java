@@ -1,7 +1,7 @@
 package main.core.impl;
 
 import main.core.BackgroundTaskExecutor;
-import main.configuration.properties.BackgroundTaskProperties;
+import main.configure.properties.BackgroundTaskProperties;
 
 import lombok.extern.slf4j.Slf4j;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
 package main.core.impl;
 
 import main.core.BackgroundTaskExecutor;
-import main.configuration.properties.BackgroundTaskProperties;
+import main.configure.properties.BackgroundTaskProperties;
 
 import lombok.extern.slf4j.Slf4j;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
-import org.springframework.scheduling.support.PeriodicTrigger;
 import org.springframework.stereotype.Component;
 
 @Slf4j

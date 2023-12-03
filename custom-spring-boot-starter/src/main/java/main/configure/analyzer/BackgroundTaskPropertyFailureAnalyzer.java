@@ -1,4 +1,4 @@
-package main.configuration.analyzer;
+package main.configure.analyzer;
 
 import main.exception.BackgroundTaskPropertyException;
 import org.springframework.boot.diagnostics.AbstractFailureAnalyzer;

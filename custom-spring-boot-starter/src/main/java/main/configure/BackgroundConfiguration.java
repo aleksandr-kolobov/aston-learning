@@ -1,7 +1,7 @@
-package main.configuration;
+package main.configure;
 
 import main.core.impl.TaskStopper;
-import main.configuration.properties.BackgroundTaskProperties;
+import main.configure.properties.BackgroundTaskProperties;
 
 import lombok.extern.slf4j.Slf4j;
 
