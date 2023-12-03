@@ -19,10 +19,12 @@ configurations {
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.alexkolo:SpringBootStarter:0.0.1-SNAPSHOT'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 }

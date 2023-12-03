@@ -1,2 +1,12 @@
-package main.configuration.properties;public class CronExecutorProperties {
+package main.configuration.properties;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class CronExecutorProperties {
+
+    private String expression;
+
 }

@@ -1,2 +1,35 @@
-package main.core.impl;public class TimeBackgroundTaskExecutor {
+package main.core.impl;
+
+import main.core.BackgroundTaskExecutor;
+import main.configuration.properties.BackgroundTaskProperties;
+
+import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
+
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler;
+import org.springframework.scheduling.support.PeriodicTrigger;
+import org.springframework.stereotype.Component;
+
+@Slf4j
+@Component
+@RequiredArgsConstructor
+@ConditionalOnExpression("'${background-executor.default-executor}'.equals('time') and ${background-executor.enabled:true}")
+public class TimeBackgroundTaskExecutor implements BackgroundTaskExecutor {
+
+    private final BackgroundTaskProperties backgroundTaskProperties;
+
+    private final ConcurrentTaskScheduler concurrentTaskScheduler;
+
+    private final TaskStopper taskStopper;
+
+    @Override
+    public void schedule(String taskId, Runnable task) {
+        log.debug("TimeBackgroundTaskExecutor: task with id {} preparing for schedule", taskId);
+
+        var future = concurrentTaskScheduler.schedule(task,
+                new PeriodicTrigger(backgroundTaskProperties.getTime().getInSeconds()));
+
+        taskStopper.registryTask(taskId, future);
+    }
 }

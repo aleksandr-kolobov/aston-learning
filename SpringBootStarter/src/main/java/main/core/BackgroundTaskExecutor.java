@@ -1,2 +1,7 @@
-package main.core;public interface BackgroundTaskExecutor {
+package main.core;
+
+public interface BackgroundTaskExecutor {
+
+    void schedule(String taskId, Runnable task);
+
 }
