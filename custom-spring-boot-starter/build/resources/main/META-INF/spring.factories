@@ -1,0 +1,6 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+org.alexkolo.custom.configure.BackgroundConfiguration
+org.springframework.boot.env.EnvironmentPostProcessor=\
+org.alexkolo.custom.configure.analyzer.PropertyGuardEnvironmentPostProcessor
+org.springframework.boot.diagnostics.FailureAnalyzer=\
+org.alexkolo.custom.configure.analyzer.BackgroundTaskPropertyFailureAnalyzer
