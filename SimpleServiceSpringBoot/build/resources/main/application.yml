@@ -1,8 +1,0 @@
-#background-executor:
-#  enabled: true
-#  defaultExecutor: cron
-#  taskSize: 1
-#  time:
-#    inSeconds: 1
-#  cron:
-#    expression: "*/3 * * * * *"
