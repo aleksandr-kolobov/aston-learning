@@ -10,7 +10,7 @@ import org.springframework.context.event.EventListener;
 
 import java.util.UUID;
 
-//@ComponentScan("org.alexkolo.custom")
+@ComponentScan("org.alexkolo.custom")
 @SpringBootApplication
 public class Main {
 
