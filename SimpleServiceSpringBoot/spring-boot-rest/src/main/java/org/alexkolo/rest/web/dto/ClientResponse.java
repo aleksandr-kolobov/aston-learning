@@ -1,17 +1,20 @@
 package org.alexkolo.rest.web.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.ArrayList;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ClientResponse {
 
     private Long id;
 
     private String name;
 
-    private List<OrderResponse> orders = new ArrayList<>();
+    private List<OrderResponse> orders;
 
 }

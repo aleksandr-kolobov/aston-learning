@@ -1,8 +1,9 @@
-package org.alexkolo.rest.web.v1;
+package org.alexkolo.rest.web.controller.v1;
 
 import lombok.RequiredArgsConstructor;
 
 import org.alexkolo.rest.mapper.v1.OrderMapper;
+import org.alexkolo.rest.model.Client;
 import org.alexkolo.rest.model.Order;
 import org.alexkolo.rest.service.OrderService;
 import org.alexkolo.rest.web.dto.*;
@@ -33,9 +34,13 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<OrderResponse> create(@RequestBody UpsertOrderRequest request) {
-        Order newOrder = orderServiceImpl.save(orderMapper.requestToOrder(request));
+
+        Order order = orderMapper.requestToOrder(request);
+        Client client = new Client();//обходим стековерфлоу
+        client.setId(request.getClientId());//обходим стековерфлоу
+        order.setClient(client);//обходим стековерфлоу
         return ResponseEntity.ok(
-                orderMapper.orderToResponse(newOrder));
+                orderMapper.orderToResponse(orderServiceImpl.save(order)));
     }
 
     @PutMapping("/{id}")
@@ -44,15 +49,14 @@ public class OrderController {
         Order updatedOrder = orderServiceImpl
                 .update(orderMapper.requestToOrder(orderId, request));
 
-        return ResponseEntity.ok(
-                orderMapper.orderToResponse(updatedOrder));
+        return ResponseEntity.ok(orderMapper.orderToResponse(updatedOrder));
 
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<OrderResponse> delete(@PathVariable Long id) {
-        orderServiceImpl.deleteById(id);
 
+        orderServiceImpl.deleteById(id);
         return ResponseEntity.ok(null);
     }
 

@@ -18,8 +18,8 @@ public class OrderMapper {
 
     public Order requestToOrder(UpsertOrderRequest request) {
         Order order = new Order();
-        order.setCost(request.getCost());
         order.setProduct(request.getProduct());
+        order.setCost(request.getCost());
         order.setClient(clientServiceImpl.findById(request.getClientId()));
 
         return order;
@@ -34,6 +34,8 @@ public class OrderMapper {
 
     public OrderResponse orderToResponse(Order order) {
         OrderResponse orderResponse = new OrderResponse();
+
+        orderResponse.setId(order.getId());
         orderResponse.setCost(order.getCost());
         orderResponse.setProduct(order.getProduct());
 

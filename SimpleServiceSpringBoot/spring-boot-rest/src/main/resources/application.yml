@@ -1,10 +1,10 @@
-#logging.level.root: DEBUG
 #server.port: 8082
-spring:
-  main:
-    allow-circular-references: true
+#spring:
+#  main:
+#    allow-circular-references: true
+#spring:
 #  datasource:
 #    url: jdbc:postgresql://localhost:5432/webshop
 #    username: postgres
-#    password: testtest
-
+#    password: ********
+#logging.level.root: DEBUG

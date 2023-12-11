@@ -1,4 +1,4 @@
-package org.alexkolo.rest.web.v1;
+package org.alexkolo.rest.web.controller.v1;
 
 import lombok.RequiredArgsConstructor;
 
@@ -46,14 +46,19 @@ public class ClientController {
 
         return ResponseEntity.ok(
                 clientMapper.clientToResponse(updatedClient));
-
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ClientResponse> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         clientServiceImpl.deleteById(id);
 
         return ResponseEntity.ok(null);
     }
+
+/*  сработает только для этого контроллера!
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Void> notFoundHandler(EntityNotFoundException e) {
+        return ResponseEntity.notFound().build();
+    }*/
 
 }
