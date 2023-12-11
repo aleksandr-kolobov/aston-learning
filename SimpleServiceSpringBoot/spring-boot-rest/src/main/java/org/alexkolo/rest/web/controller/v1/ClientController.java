@@ -1,5 +1,6 @@
 package org.alexkolo.rest.web.controller.v1;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.alexkolo.rest.mapper.v1.ClientMapper;
@@ -32,7 +33,7 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<ClientResponse> create(@RequestBody UpsertClientRequest request) {
+    public ResponseEntity<ClientResponse> create(@RequestBody @Valid UpsertClientRequest request) {
         Client newClient = clientServiceImpl.save(clientMapper.requestToClient(request));
         return ResponseEntity.ok(
                 clientMapper.clientToResponse(newClient));
@@ -40,7 +41,7 @@ public class ClientController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ClientResponse> update(@PathVariable("id") Long clientId,
-                                                 @RequestBody UpsertClientRequest request) {
+                                                 @RequestBody @Valid UpsertClientRequest request) {
         Client updatedClient = clientServiceImpl
                 .update(clientMapper.requestToClient(clientId, request));
 

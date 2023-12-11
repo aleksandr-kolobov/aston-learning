@@ -1,5 +1,6 @@
 package org.alexkolo.rest.web.controller.v1;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.alexkolo.rest.mapper.v1.OrderMapper;
@@ -33,7 +34,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<OrderResponse> create(@RequestBody UpsertOrderRequest request) {
+    public ResponseEntity<OrderResponse> create(@RequestBody @Valid UpsertOrderRequest request) {
 
         Order order = orderMapper.requestToOrder(request);
         Client client = new Client();//обходим стековерфлоу
@@ -45,7 +46,7 @@ public class OrderController {
 
     @PutMapping("/{id}")
     public ResponseEntity<OrderResponse> update(@PathVariable("id") Long orderId,
-                                                 @RequestBody UpsertOrderRequest request) {
+                                                 @RequestBody @Valid UpsertOrderRequest request) {
         Order updatedOrder = orderServiceImpl
                 .update(orderMapper.requestToOrder(orderId, request));
 
@@ -59,11 +60,5 @@ public class OrderController {
         orderServiceImpl.deleteById(id);
         return ResponseEntity.ok(null);
     }
-
-
-
-
-
-
 
 }

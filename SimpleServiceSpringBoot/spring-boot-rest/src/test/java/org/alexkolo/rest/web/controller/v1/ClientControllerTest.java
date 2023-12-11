@@ -12,17 +12,22 @@ import org.alexkolo.rest.web.dto.ClientResponse;
 import org.alexkolo.rest.web.dto.OrderResponse;
 import org.alexkolo.rest.web.dto.UpsertClientRequest;
 
-import net.javacrumbs.jsonunit.JsonAssert;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 
+import net.javacrumbs.jsonunit.JsonAssert;
+import net.bytebuddy.utility.RandomString;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ClientControllerTest extends AbstractTestController {
 
@@ -55,10 +60,8 @@ public class ClientControllerTest extends AbstractTestController {
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
-
         String expectedResponse = StringTestUtils.readStringFromResource(
-                "response/find_all_clients_response.json");
-
+                    "response/find_all_clients_response.json");
         JsonAssert.assertJsonEquals(expectedResponse, actualResponse);
 
         Mockito.verify(clientServiceImpl, Mockito.times(1)).findAll();
@@ -81,10 +84,8 @@ public class ClientControllerTest extends AbstractTestController {
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
-
         String expectedResponse = StringTestUtils.readStringFromResource(
-                "response/find_client_by_id_response.json");
-
+                          "response/find_client_by_id_response.json");
         JsonAssert.assertJsonEquals(expectedResponse, actualResponse);
 
         Mockito.verify(clientServiceImpl, Mockito.times(1)).findById(1L);
@@ -113,10 +114,8 @@ public class ClientControllerTest extends AbstractTestController {
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
-
         String expectedResponse = StringTestUtils.readStringFromResource(
-                "response/create_client_response.json");
-
+                           "response/create_client_response.json");
         JsonAssert.assertJsonEquals(expectedResponse, actualResponse);
 
         Mockito.verify(clientServiceImpl, Mockito.times(1)).save(client);
@@ -145,10 +144,8 @@ public class ClientControllerTest extends AbstractTestController {
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
-
         String expectedResponse = StringTestUtils.readStringFromResource(
-                "response/update_client_response.json");
-
+                    "response/update_client_response.json");
         JsonAssert.assertJsonEquals(expectedResponse, actualResponse);
 
         Mockito.verify(clientServiceImpl, Mockito.times(1)).update(updatedClient);
@@ -166,9 +163,6 @@ public class ClientControllerTest extends AbstractTestController {
         mockMvc.perform(delete("/api/v1/clients/1"))
                 .andExpect(status().isOk());
 
-        String expectedResponse = StringTestUtils.readStringFromResource(
-                "response/update_client_response.json");
-
         Mockito.verify(clientServiceImpl, Mockito.times(1)).deleteById(1L);
     }
 
@@ -183,17 +177,60 @@ public class ClientControllerTest extends AbstractTestController {
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
-
         String expectedResponse = StringTestUtils.readStringFromResource(
-                "response/client_by_id_not_found_response.json");
-
+                          "response/client_by_id_not_found_response.json");
         JsonAssert.assertJsonEquals(expectedResponse, actualResponse);
 
         Mockito.verify(clientServiceImpl, Mockito.times(1)).findById(100L);
 
     }
 
+    @Test
+    public void whenCreateClientWithEmptyMame_thenReturnError() throws Exception {
+
+        var response = mockMvc.perform(post("/api/v1/clients")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(
+                                new UpsertClientRequest())))
+                .andExpect(status().isBadRequest())
+                .andReturn()
+                .getResponse();
+        //response.setCharacterEncoding("UTF-8");//для русских символов
+
+        String actualResponse = response.getContentAsString();
+        String expectedResponse = StringTestUtils.readStringFromResource(
+                                      "response/empty_client_response.json");
+        JsonAssert.assertJsonEquals(expectedResponse, actualResponse);
+
+    }
+
+    @ParameterizedTest
+    @MethodSource("invalidSizeName")
+    public void whenCreateClientWrongName_thenReturnError(String name) throws Exception {
+
+        var response = mockMvc.perform(post("/api/v1/clients")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(
+                                new UpsertClientRequest(name))))
+                .andExpect(status().isBadRequest())
+                .andReturn()
+                .getResponse();
+        //response.setCharacterEncoding("UTF-8");//для русских символов
+
+        String actualResponse = response.getContentAsString();
+        String expectedResponse = StringTestUtils.readStringFromResource(
+                           "response/client_name_size_exception_response.json");
+        JsonAssert.assertJsonEquals(expectedResponse, actualResponse);
+
+    }
 
 
+
+
+    private static Stream<Arguments> invalidSizeName() {
+        return Stream.of(
+                Arguments.of(RandomString.make(2)),
+                        Arguments.of(RandomString.make(31)));
+    }
 
 }
