@@ -4,4 +4,4 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/todolist
     username: postgres
-    password: testtest
+    password: ********
