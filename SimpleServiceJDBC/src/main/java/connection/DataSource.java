@@ -11,7 +11,7 @@ public class DataSource {
             Class.forName("org.postgresql.Driver");
             String url = "jdbc:postgresql://localhost:5432/college";
             String user = "postgres";
-            String pass = "testtest";
+            String pass = "********";
             connection = DriverManager.getConnection(url, user, pass);
         }
         return connection;
