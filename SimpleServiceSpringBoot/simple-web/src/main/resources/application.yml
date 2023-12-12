@@ -1,7 +1,0 @@
-#server.port: 8082
-logging.level.root: DEBUG
-spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/todolist
-    username: postgres
-    password: ********
