@@ -1,0 +1,5 @@
+#server.port: 8082
+app:
+  check-client-api-key-in-header: false
+  client-api-key: 12345
+#logging.level.root: DEBUG
