@@ -1,10 +1,5 @@
 #server.port: 8082
-#spring:
-#  main:
-#    allow-circular-references: true
-#spring:
-#  datasource:
-#    url: jdbc:postgresql://localhost:5432/webshop
-#    username: postgres
-#    password: ********
+app:
+  check-client-api-key-in-header: false
+  client-api-key: 12345
 #logging.level.root: DEBUG
