@@ -43,14 +43,6 @@ build/
 *.tar.gz
 *.rar
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-out/
-!**/src/main/**/out/
-!**/src/test/**/out/
 **/out/
 **/build/
 **/target/
@@ -98,15 +90,6 @@ buildNumber.properties
 .idea/replstate.xml
 .idea/modules.xml
 .idea_modules/
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-
-### VS Code ###
-.vscode/
 
 # CMake
 cmake-build-*/
