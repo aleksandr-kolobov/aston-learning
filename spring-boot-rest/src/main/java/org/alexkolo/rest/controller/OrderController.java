@@ -1,15 +1,17 @@
-package org.alexkolo.rest.web.controller.v1;
+package org.alexkolo.rest.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
-import org.alexkolo.rest.mapper.v1.OrderMapper;
+import org.alexkolo.rest.mapper.OrderMapper;
 import org.alexkolo.rest.model.Client;
 import org.alexkolo.rest.model.Order;
+import org.alexkolo.rest.model.dto.OrderListResponse;
+import org.alexkolo.rest.model.dto.OrderResponse;
+import org.alexkolo.rest.model.dto.UpsertOrderRequest;
 import org.alexkolo.rest.service.OrderService;
-import org.alexkolo.rest.web.dto.*;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

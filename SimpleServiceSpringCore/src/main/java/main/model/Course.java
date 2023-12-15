@@ -1,6 +1,7 @@
 package main.model;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -21,6 +22,7 @@ public class Course {
     @NotEmpty(message = "Need any")
     private Integer duration;
 
+    @ToString.Exclude
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "course", fetch = FetchType.EAGER)
     private List<Teacher> teachers;
 }

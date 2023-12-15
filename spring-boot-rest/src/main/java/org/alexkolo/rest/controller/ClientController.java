@@ -1,18 +1,16 @@
-package org.alexkolo.rest.web.controller.v1;
+package org.alexkolo.rest.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
-import org.alexkolo.rest.mapper.v1.ClientMapper;
+import org.alexkolo.rest.mapper.ClientMapper;
 import org.alexkolo.rest.model.Client;
+import org.alexkolo.rest.model.dto.ClientListResponse;
+import org.alexkolo.rest.model.dto.ClientResponse;
+import org.alexkolo.rest.model.dto.UpsertClientRequest;
 import org.alexkolo.rest.service.ClientService;
-import org.alexkolo.rest.web.dto.*;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,22 +42,6 @@ public class ClientController {
             description = "Get client by Id. Return id, name and list of orders",
             tags = {"client", "id"}
     )
-    @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200",
-                    content = {
-                            @Content(schema = @Schema(implementation = ClientResponse.class),
-                                    mediaType = "application/json")
-                    }
-            ),
-            @ApiResponse(
-                    responseCode = "404",
-                    content = {
-                            @Content(schema = @Schema(implementation = ErrorResponse.class),
-                                    mediaType = "application/json")
-                    }
-            )
-    })
     @GetMapping("/{id}")
     public ResponseEntity<ClientResponse> findById(@PathVariable Long id) {
         return ResponseEntity.ok(

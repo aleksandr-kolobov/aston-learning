@@ -1,6 +1,6 @@
-package org.alexkolo.rest.web.controller;
+package org.alexkolo.rest.controller;
 
-import org.alexkolo.rest.web.dto.ErrorResponse;
+import org.alexkolo.rest.model.dto.ErrorResponse;
 import org.alexkolo.rest.exception.EntityNotFoundException;
 
 import lombok.extern.slf4j.Slf4j;

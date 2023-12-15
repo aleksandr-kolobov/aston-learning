@@ -1,16 +1,16 @@
-package org.alexkolo.rest.web.controller.v1;
+package org.alexkolo.rest.web.contr.v1;
 
 import org.alexkolo.rest.AbstractTestController;
 import org.alexkolo.rest.StringTestUtils;
 import org.alexkolo.rest.exception.EntityNotFoundException;
-import org.alexkolo.rest.mapper.v1.ClientMapper;
+import org.alexkolo.rest.mapper.ClientMapper;
 import org.alexkolo.rest.model.Client;
 import org.alexkolo.rest.model.Order;
 import org.alexkolo.rest.service.ClientService;
-import org.alexkolo.rest.web.dto.ClientListResponse;
-import org.alexkolo.rest.web.dto.ClientResponse;
-import org.alexkolo.rest.web.dto.OrderResponse;
-import org.alexkolo.rest.web.dto.UpsertClientRequest;
+import org.alexkolo.rest.model.dto.ClientListResponse;
+import org.alexkolo.rest.model.dto.ClientResponse;
+import org.alexkolo.rest.model.dto.OrderResponse;
+import org.alexkolo.rest.model.dto.UpsertClientRequest;
 
 import java.util.ArrayList;
 import java.util.List;

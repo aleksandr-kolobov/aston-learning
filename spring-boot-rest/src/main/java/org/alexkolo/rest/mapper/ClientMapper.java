@@ -1,10 +1,10 @@
-package org.alexkolo.rest.mapper.v1;
+package org.alexkolo.rest.mapper;
 
 import lombok.RequiredArgsConstructor;
 import org.alexkolo.rest.model.Client;
-import org.alexkolo.rest.web.dto.ClientListResponse;
-import org.alexkolo.rest.web.dto.ClientResponse;
-import org.alexkolo.rest.web.dto.UpsertClientRequest;
+import org.alexkolo.rest.model.dto.ClientListResponse;
+import org.alexkolo.rest.model.dto.ClientResponse;
+import org.alexkolo.rest.model.dto.UpsertClientRequest;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

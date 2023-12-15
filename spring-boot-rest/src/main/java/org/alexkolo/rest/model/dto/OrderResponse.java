@@ -1,4 +1,4 @@
-package org.alexkolo.rest.web.dto;
+package org.alexkolo.rest.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

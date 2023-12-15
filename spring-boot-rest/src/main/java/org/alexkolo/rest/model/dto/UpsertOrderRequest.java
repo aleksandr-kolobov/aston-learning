@@ -1,4 +1,4 @@
-package org.alexkolo.rest.web.dto;
+package org.alexkolo.rest.model.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
